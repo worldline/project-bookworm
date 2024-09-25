@@ -1,0 +1,43 @@
+<configuration scan="true" scanPeriod="60 seconds">
+    <property name="LOG_DIR" value="logs"/>
+    <property name="LOG_NAME" value="app"/>
+    <property name="APP_BASE_PACKAGE" value="worldline"/>
+    <property name="LOG_LEVEL_APP" value="DEBUG"/>
+    <property name="LOG_LEVEL_ROOT" value="INFO"/>
+    <property name="MAX_FILE_SIZE" value="5MB"/>
+    <property name="TOTAL_SIZE_CAP" value="50MB"/>
+    <property name="SVCCODE" value="APP"/>
+    <property name="LOG_PATTERN" value="%-5level - %date{yyyyMMdd'T'HHmmss'.'SSS'Z', UTC} | ${SVCCODE} %X{LOGCORRELATIONID:-n/a} | %thread@%class.%method\(%line\) | %msg%n"/>
+
+    <!-- Console appenders -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>${CONSOLE_OUTPUT:-ALL}</level> <!--  use -DCONSOLE_OUTPUT="OFF" to disable console output -->
+        </filter>
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- File appenders -->
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${LOG_DIR}/${LOG_NAME}.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/${LOG_NAME}-%d{yyyy-MM-dd}_%i.zip</fileNamePattern>
+            <maxFileSize>${MAX_FILE_SIZE:-5MB}</maxFileSize>
+            <maxHistory>5</maxHistory>
+            <totalSizeCap>${TOTAL_SIZE_CAP:-50MB}</totalSizeCap>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>${LOG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="${APP_BASE_PACKAGE}" level="${LOG_LEVEL_APP}" />
+
+    <root level="${LOG_LEVEL_ROOT}">
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="STDOUT"/>
+    </root>
+</configuration>
