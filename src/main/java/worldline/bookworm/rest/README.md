@@ -30,16 +30,16 @@ as part of its attributes. Although the specification does not recommend such sh
     "type": "books",
     "id": "1",
     "attributes": {
-      "title": "The Hitchhiker's Guide to the Galaxy",
+      "title": "The Gathering Storm (Wheel of Time, 12)",
       "status": "BORROWED",
       "authors": [
         {
-          "firstname": "Douglas",
-          "lastname": "Adams"
+          "firstname": "Robert",
+          "lastname": "Jordan"
         },
         {
-          "firstname": "Terry",
-          "lastname": "Pratchett"
+          "firstname": "Brandon",
+          "lastname": "Sanderson"
         }
       ]
     }
